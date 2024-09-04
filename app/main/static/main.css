@@ -1,0 +1,93 @@
+#login-page {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#login-form {
+    height: auto;
+    width: fit-content;
+    border: black 1px solid;
+    box-shadow: 0 3px 4px #888888;
+    padding: 5px;
+}
+
+#dashboard-main {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#admin-main {
+    height: 100vh;
+    width: 100vw;
+}
+
+.dashboard-link {
+    color: inherit;
+    text-decoration: none;
+    width: 20%;
+    height: 20%;
+    border: black solid 1px;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-block {
+    width: 20%;
+    height: 20%;
+    border: black solid 1px;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list_name{
+    margin-left: 15px;
+    display: block;
+}
+.list_name:hover {
+    cursor: pointer;
+    background-color: rgb(236, 234, 234);
+}
+
+.years {
+    margin-left: 30px;
+    display: none;
+}
+.years:hover {
+    cursor: pointer;
+    background-color: rgb(236, 234, 234);
+}
+
+.months {
+    margin-left: 45px;
+    display: none;
+}
+.months:hover {
+    cursor: pointer;
+    background-color: rgb(236, 234, 234);
+}
+
+.files {
+    margin-left: 60px;
+    display: none;
+}
+
+.loading {
+    width: 50px;
+    height: 50px;
+    background: url('loading.gif') center center;
+  }
+#navbar-user-details{
+    margin-right: 60px;
+    display: flex;
+    flex-direction: column;
+}

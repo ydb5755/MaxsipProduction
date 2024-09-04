@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Profile Page{% endblock title %}
+{% block content %}
+<div class="form-card">
+    <div class="form-card-body">
+        <h3>Reset Password?</h3>
+        <form method="post" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+
+            {{ form.password.label }}
+            {{ form.password() }}
+
+            {{ form.confirm_password.label }}
+            {{ form.confirm_password() }}
+
+            {{ form.submit(class='btn-donate btn-submit') }}
+        </form>
+    </div>
+</div>
+{% endblock content %}

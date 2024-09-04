@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Active by Plan{% endblock title %}
+{% block stylesheet %}
+<script src="https://kit.fontawesome.com/49e5095171.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{{ url_for('.static', filename='status_reports.css') }}">
+{% endblock stylesheet %}
+{% block content %}
+<main>
+    <div class="container-md mt-2" id="status-report-header">
+        <div class="container-md mt-2" id="image-header-and-arrows">
+            <a href="{{url_for('status_reports.active_total_and_thirty')}}">Previous Report</a>
+            <img src="{{url_for('main.static', filename='navyjpg.jpg')}}" alt="Navy Image" style="height: 150px;">
+            <a href="{{url_for('status_reports.customer_age_by_portal')}}">Next Report</a>
+        </div>
+        <h4>Active Customer Count by Plan</h4>
+        <h5 id="current-date-target"></h5>
+    </div>
+    <div class="container-lg mt-2 mb-10">
+        <div class="row">
+            <div class="col">
+                <h2 id="active-customer-by-plan-header">Active Customer Count by Plan</h2>
+                <table class="table table-bordered mb-5" id="active-customer-by-plan-table">
+                    <thead>
+                        <tr class="diff-header">
+                          <th class="lastUpdated"></th>
+                          <th>% Diff - 1 Day</th>
+                          <th>% Diff - 7 Days</th>
+                          <th>% Diff - 30 Days</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="{{url_for('.static', filename='active_by_plan.js')}}"></script>
+{% endblock %}

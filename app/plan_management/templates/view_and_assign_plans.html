@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Overview of Plans{% endblock title %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ url_for('.static', filename='plans.css') }}">
+{% endblock stylesheet %}
+{% block content %}
+<main class="container-lg mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="container-md mt-2" id="plans-header">
+                <div class="container-md mt-2" id="image-header">
+                    <img src="{{url_for('main.static', filename='navyjpg.jpg')}}" alt="Navy Image" style="height: 150px;">
+                </div>
+                <h4>View/Assign Plans</h4>
+            </div>
+            <div class="container-md mt-2" id="portal-data">
+                <h4>Portal - <span id="source-database">{{source_database}}</span></h4>
+                <h4>Plan Quantity - <span id="plan-qty"></span></h4>
+            </div>
+            <div class="container-md mt-2" id="view-data-select">
+                <h4>View</h4>
+                <div class="checkbox-containers">
+                    <input id="assigned-checkbox" type="checkbox" checked/>
+                    <div>
+                        <p>Assigned - <span id="view-assigned-quantity"></span></p>
+                    </div>
+                </div>
+                <div class="checkbox-containers">
+                    <input id="unassigned-checkbox" type="checkbox" checked/>
+                    <div>
+                        <p>Unassigned - <span id="view-unassigned-quantity"></span></p>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="assign-button" {% if current_user.user_type == 'User' %}disabled{%endif%}>Assign</button>
+            </div>
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-4 mt-4">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Plan ID</th>
+                            <th>Plan Name</th>
+                            <th>Active</th>
+                            <th>Inactive</th>
+                            {% for code in program_codes %}
+                                <th>{{code}}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+                <div id="next-and-save-container">
+                    <button id="previous-button" class="btn btn-primary" disabled>
+                        <p>Previous</p>
+                    </button>
+                    <button id="next-button" class="btn btn-primary">
+                        <p>Next</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="{{url_for('.static', filename='plans.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Edit Program Name{% endblock title %}
+{% block content %}
+<main class="container-lg mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Edit Program Name</h3>
+                    <form method="post" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        {{ form.id(class="form-control", type='hidden') }}
+
+                        <div class="mb-3">
+                            {{ form.program_name.label(class="form-label") }}
+                            {{ form.program_name(class="form-control") }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.program_code.label(class="form-label") }}
+                            {{ form.program_code(class="form-control") }}
+                        </div>
+
+                        {{ form.submit(class='btn btn-primary') }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

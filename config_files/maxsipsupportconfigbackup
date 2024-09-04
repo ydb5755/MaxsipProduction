@@ -1,0 +1,24 @@
+# Redirect HTTP traffic to HTTPS
+server {
+    listen 80;
+    server_name maxsipsupport.com www.maxsipsupport.com;
+
+    return 301 https://$host$request_uri;
+}
+
+# HTTPS server block
+server {
+    listen 443 ssl;
+    server_name maxsipsupport.com www.maxsipsupport.com;
+
+    ssl_certificate /etc/letsencrypt/live/maxsipsupport.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/maxsipsupport.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    location / {
+        include /etc/nginx/proxy_params;
+	proxy_redirect off;
+        proxy_pass http://127.0.0.1:5000;
+	}
+}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}User Page{% endblock title %}
+{% block content %}
+<main>
+    <div class="container mt-5">
+        <h2>Uploaded Report Records</h2>
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User Email</th>
+                    <th>Report Type</th>
+                    <th>Number of New Records Added</th>
+                    <th>Date Uploaded</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.id }}</td>
+                    <td>{{ record.user_id }}</td>
+                    <td>{{ record.report_type }}</td>
+                    <td>{{ record.number_of_new_records_added }}</td>
+                    <td>{{ record.date_uploaded }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}

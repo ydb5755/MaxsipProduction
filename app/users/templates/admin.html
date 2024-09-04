@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}User Access{% endblock title %}
+{% block content %}
+<main id="admin-main" class="container-lg mt-5"> <!-- Added 'container-lg' class to make the container larger -->
+    <div class="row justify-content-center">
+        <div class="col-md-10"> <!-- Increased the width of the column -->
+            <div class="p-4 bg-white rounded border border-dark shadow-sm"> <!-- Added classes for border, padding, background, and shadow -->
+                <a href="{{url_for('users.add_user_form')}}" class="btn btn-primary mb-3">Add User</a> <!-- Styled the link as a button -->
+                <div>
+                    <h3>Current Users</h3>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">User Type</th>
+                            <th scope="col">Edit Links</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{user.first_name}}</td>
+                                <td>{{user.last_name}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.user_type}}</td>
+                                {% if user.id != current_user.id %}
+                                    <td><a href="{{url_for('users.edit_profile', user_id=user.id)}}" class="btn btn-info btn-sm">Edit User</a> - <a href="{{url_for('users.delete_user', user_id=user.id)}}" class="btn btn-danger btn-sm">Delete User</a></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

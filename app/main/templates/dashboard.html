@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock title %}
+{% block content %}
+<main class="container-lg mt-5">
+    <div class="row justify-content-center">
+        {% if current_user.user_type == 'Admin' %}
+        <div class="col-md-6">
+            {% if current_user.id == 1 %}
+            <h4>Sruli Only</h4>
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('users.test_sub', user=current_user.first_name)}}" class="btn btn-primary btn-lg btn-block mb-3">test subdomain</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Testing</p>
+                    </div>
+                </div>
+            </div>
+            
+            {% endif %}
+            <h4>Admins Only</h4>
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('users.admin')}}" class="btn btn-primary btn-lg btn-block mb-3">User Access</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Manage user accounts on this site by adding or modifying them. Adjust their permissions to control the information they can access.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('reports.telgoo_files')}}" class="btn btn-primary btn-lg btn-block mb-3">Upload Files</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Upload specific Telgoo files for analysis. This feature is only available to admins only.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('reports.uploaded_report_records')}}" class="btn btn-primary btn-lg btn-block mb-3">Uploaded Report Records</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Available only to Admins- this displays all files uploaded via the Upload Files function</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="col-md-6">
+            {% if current_user.user_type == 'Admin' or current_user.user_type == 'Manager' %}
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('plan_management.overview_of_plans')}}" class="btn btn-primary btn-lg btn-block mb-3">Overview Of Plans</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Overview Of Plans</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('status_reports.active_total_and_thirty')}}" class="btn btn-primary btn-lg btn-block mb-3">Active Total and Thirty</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Active, Total, & 30 Day Plus Customer Count</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('status_reports.active_by_plan')}}" class="btn btn-primary btn-lg btn-block mb-3">Active Customer Count by Plan</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Active Customer Count by Plan</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('status_reports.customer_age_by_portal')}}" class="btn btn-primary btn-lg btn-block mb-3">Active Customer Age Analysis by Portal</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Active Customer Age Analysis by Portal</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('agent_reports.agent_customer_analysis')}}" class="btn btn-primary btn-lg btn-block mb-3">Agent and Customer Analysis</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Master Agent and Agents Active Customer Analysis</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('agent_reports.total_customer_count_by_agent_or_master_agent')}}" class="btn btn-primary btn-lg btn-block mb-3">Total Customer Count by Agent or Master Agent</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Total Customer Count by Agent or Master Agent</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('agent_reports.thirty_day_agent_and_master_agent')}}" class="btn btn-primary btn-lg btn-block mb-3">30 Day+ Active Customer Count by Agent or Master Agent</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>30 Day+ Active Customer Count by Agent or Master Agent</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('agent_reports.customer_age_analysis_by_agent_and_master_agent')}}" class="btn btn-primary btn-lg btn-block mb-3">Customer Age Analysis By Agents And Master Agents</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Customer Age Analysis By Agents And Master Agents</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('main.customer_search')}}" class="btn btn-primary btn-lg btn-block mb-3">Customer Search</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Find customers from Unavo, Maxsip.Telgoo, and Terracom using their Order ID, Enrollment ID, or NLAD Subscriber ID.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{url_for('reports.report_generators')}}" class="btn btn-primary btn-lg btn-block mb-3">Report Generators</a>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Allows users to generate built-in customized reports</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+

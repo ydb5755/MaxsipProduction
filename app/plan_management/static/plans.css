@@ -1,0 +1,38 @@
+#plans-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#image-header{
+    text-align: center;
+}
+#portal-data, #view-data-select{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.checkbox-containers{
+    display: flex;
+
+}
+
+.checkbox-containers p{
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+#next-button, #save-button, #previous-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+#next-button p, #save-button p, #previous-button p{
+    margin: 0;
+}
+#next-and-save-container{
+    display: flex;
+    justify-content: flex-end;
+}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock title %}
+{% block content %}
+<main class="container-lg mt-5">
+    <div class="row">
+        <button onclick="testingFunction()">Testing</button>
+    </div>
+</main>
+<script>
+    const url = "{{url_for('endpoints.test_endpoint')}}"
+    async function testingFunction() {
+        const response = await fetch(url)
+        const movies = await response.json();
+        console.log(movies);
+    }
+</script>
+{% endblock %}

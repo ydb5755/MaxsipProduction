@@ -1,0 +1,349 @@
+{% extends 'base.html' %}
+{% block title %}Customer Result{% endblock title %}
+{% block content %}
+<main class="container">
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <h2 class="mb-4">Information Summary</h2>
+            <button class="btn btn-info btn-block mb-3" onclick="showInfo('customer-info')">Customer Info</button>
+            <button class="btn btn-info btn-block mb-3" onclick="showInfo('account-info')">Account Info</button>
+            <button class="btn btn-info btn-block mb-3" onclick="showInfo('service-device')">Service & Device</button>
+            <button class="btn btn-info btn-block mb-3" onclick="showInfo('onboard-info')">Onboard Info</button>
+            <div id="info-summary"></div>
+        </div>
+        <div class="col-md-4">
+            <h2 class="mb-4">Other Info</h2>
+            {% if contacts_with_same_dob_ssn_by_sub_id %}
+            <div id="dob-ssn-info">
+                <h4>Additional Subscriber ID's with same DOB-SSN</h4>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>SubID</th>
+                        <th>Qty O/E ID's</th>
+                        <th>Name</th>
+                        <th>State</th>
+                        <th>ZIP</th>
+                    </tr>
+                    {% for dob_ssn_contact in contacts_with_same_dob_ssn_by_sub_id %}
+                        <tr>
+                            {% if dob_ssn_contact['NLAD_Subscriber_ID'] == contact['NLAD_Subscriber_ID'] %}
+                                <td>*{{dob_ssn_contact['NLAD_Subscriber_ID']}}</td>
+                            {% else %}
+                                <td>{{dob_ssn_contact['NLAD_Subscriber_ID']}}</td>
+                            {% endif %}
+                            <td><span style="color: pink; cursor:pointer;" id="{{dob_ssn_contact['NLAD_Subscriber_ID']}}" onclick='showOrderIDs(this)'>{{dob_ssn_contact['Length_Of_List_Of_Order_Ids']}}</span></td>
+                            <td>{{dob_ssn_contact['First_Name']}} {{dob_ssn_contact['Last_Name']}}</td>
+                            <td>{{dob_ssn_contact['State']}}</td>
+                            <td>{{dob_ssn_contact['ZIP']}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% else %}
+            <p>There are no other contacts with the same dob and ssn</p>
+            {% endif %}
+            <div id="result-div" style="width:100%;"></div>
+        </div>
+        <div class="col-md-4">
+            <h2>Sales Reps</h2>
+            <p>List of sales reps associated with each sub id and enrollment id</p>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Master Agent Name</th>
+                        <th>Employee Name</th>
+                        <th>Qty of O/E ID's</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sales_rep in master_agent_agent_count.values() %}
+                        <tr>
+                            <td>{{sales_rep.master_agent_name}}</td>
+                            <td>{{sales_rep.agent_name}}</td>
+                            <td>{{sales_rep.qty}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<script>
+    var currentlyDisplayed = {
+        infoSummary:'',
+        orderIDSummary:''
+    }
+
+    function showInfo(infoType) {
+        var infoSummary = document.getElementById('info-summary');
+        var infoContent = '';
+    
+        switch (infoType) {
+            case 'account-info':
+                infoContent = `
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>NLAD Subscriber ID</td>
+                                <td>{{ contact['NLAD_Subscriber_ID'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Customer Order ID</td>
+                                <td>{{ contact['Customer_Order_ID'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>CLEC</td>
+                                <td>{{ contact['CLEC'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Created Date</td>
+                                <td>{{ contact['Created_Date'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Order Date</td>
+                                <td>{{ contact['Order_Date'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Activation Date</td>
+                                <td>{{ contact['Activation_Date'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Qualifying Program</td>
+                                <td>{{ contact['Qualifying_Program'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Account Status</td>
+                                <td>{{ contact['Account_Status'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>ACP Status</td>
+                                <td>{{ contact['ACP_Status'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Deactivation Date</td>
+                                <td>{{ contact['Deactivation_Date'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Misc Customer ID</td>
+                                <td>{{ contact['Misc_Customer_ID'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Database</td>
+                                <td>{{ contact['Source_Database'] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+                break;
+            case 'service-device':
+                infoContent = `
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>Service Carrier</td>
+                                <td>{{ contact['Service_Carrier'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Device Manufacturer</td>
+                                <td>{{ contact['Device_Mfg'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Device Model Number</td>
+                                <td>{{ contact['Device_Model_Number'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Device Type</td>
+                                <td>{{ contact['Device_Type'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>IMEI</td>
+                                <td>{{ contact['IMEI'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>ESN</td>
+                                <td>{{ contact['ESN'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>MDN</td>
+                                <td>{{ contact['MDN'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Plan</td>
+                                <td>{{ contact['Plan'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Last Used Data</td>
+                                <td>{{ contact['Last_Used_Data'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Last Used Phone</td>
+                                <td>{{ contact['Last_Used_Phone'] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+                break;
+            case 'onboard-info':
+                infoContent = `
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>Master Agent Name</td>
+                                <td>{{ contact['MASTER_AGENT_NAME'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Distributor Agent Name</td>
+                                <td>{{ contact['DISTRIBUTOR_AGENT_NAME'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Retailer Agent Name</td>
+                                <td>{{ contact['RETAILER_AGENT_NAME'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Agent</td>
+                                <td>{{ contact['Agent'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Agent Login ID</td>
+                                <td>{{ contact['Agent_LoginID'] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+                break;
+            case 'customer-info':
+                infoContent = `
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>First Name</td>
+                                <td>{{ contact['First_Name'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Last Name</td>
+                                <td>{{ contact['Last_Name'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Address One</td>
+                                <td>{{ contact['Address1'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Address Two</td>
+                                <td>{{ contact['Address2'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>City</td>
+                                <td>{{ contact['City'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>State</td>
+                                <td>{{ contact['State'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>ZIP</td>
+                                <td>{{ contact['Zip'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>{{ contact['Email'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Phone</td>
+                                <td>{{ contact['Phone1'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>DOB</td>
+                                <td>{{ contact['DOB'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>SSN</td>
+                                <td>{{ contact['SSN'] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+                break;
+                    
+        }
+        if (currentlyDisplayed.infoSummary == infoType) {
+            infoSummary.innerHTML = '';
+            currentlyDisplayed.infoSummary = '';
+        } else {
+            infoSummary.innerHTML = infoContent;
+            currentlyDisplayed.infoSummary = infoType;
+        }
+    }
+
+    function showOrderIDs(el) {
+        var resultDiv = document.getElementById('result-div');
+        const obj = JSON.parse('{{js_data|safe}}');
+        resultDiv.innerHTML = ''; // Clear the previous content
+        
+        // Create table element with Bootstrap classes
+        const table = document.createElement('table');
+        table.classList.add('table', 'table-bordered');
+    
+        // Create table header row with Bootstrap classes
+        const thead = document.createElement('thead');
+        thead.classList.add('thead-dark');
+        const headerRow = document.createElement('tr');
+        const headers = ['Customer Order ID', 'First Name', 'Last Name'];
+        headers.forEach(headerText => {
+            const th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+    
+        // Create table body with Bootstrap classes
+        const tbody = document.createElement('tbody');
+        // Populate table body with data
+        for (const property in obj) {
+            if (property == el.id) {
+                const arr = obj[property];
+                arr.forEach(element => {
+                    const dataRow = document.createElement('tr');
+    
+                    // Assuming obj elements contain Customer_Order_ID, first name, and last name
+                    const td1 = document.createElement('td');
+                    if (element.Customer_Order_ID == "{{contact['Customer_Order_ID']}}"){
+                        td1.textContent = "*" + element.Customer_Order_ID;
+                    } else {
+                        const anchor = document.createElement('a');
+                        const orderId = element.Customer_Order_ID;
+                        const url = "{{url_for('main.customer_result_by_order_id', order_id='')}}" + orderId;
+                        anchor.href = url
+                        anchor.target = '_blank'
+                        anchor.textContent = element.Customer_Order_ID;
+                        td1.appendChild(anchor);
+                    }
+                    
+                    const td2 = document.createElement('td');
+                    td2.textContent = element.First_Name;
+                    const td3 = document.createElement('td');
+                    td3.textContent = element.Last_Name;
+    
+                    // Append table data cells to row
+                    dataRow.appendChild(td1);
+                    dataRow.appendChild(td2);
+                    dataRow.appendChild(td3);
+    
+                    // Append row to table body
+                    tbody.appendChild(dataRow);
+                });
+            }
+        }
+    
+        // Append table body to table
+        table.appendChild(tbody);
+        
+        if (currentlyDisplayed.orderIDSummary == el.id) {
+            currentlyDisplayed.orderIDSummary = '';
+        } else {
+            resultDiv.appendChild(table);
+            currentlyDisplayed.orderIDSummary = el.id;
+        }
+    }
+</script>
+{% endblock %}

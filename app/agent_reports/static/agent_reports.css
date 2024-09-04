@@ -1,0 +1,57 @@
+#status-report-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#page-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#arrows-and-date{
+    text-align: center;
+}
+#transfer-out-header{
+    color:red;
+    text-align: right;
+    padding-right: 150px;
+}
+#date-arrow-left:hover, #date-arrow-right:hover{
+    cursor: pointer;
+}
+
+.nums-and-arrows {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.child {
+    box-sizing: border-box;
+    font-size: 1.5em;
+}
+
+.fa-2xl{
+    font-size: 3em;
+}
+
+label{
+    font-size: 2em;
+}
+
+#show-more{
+    margin-bottom: 50px;
+}
+
+input{
+    height:20px;
+    width: 20px;
+}
+
+#image-header-and-arrows{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: xx-large;
+}

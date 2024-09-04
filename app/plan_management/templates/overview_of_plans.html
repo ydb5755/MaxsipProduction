@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Overview of Plans{% endblock title %}
+{% block content %}
+<main class="container-lg mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-4">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Portal Name</th>
+                            <th>Assigned</th>
+                            <th>Unassigned</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Unavo</th>
+                            <td>{{result['Unavo']['assigned']}}</td>
+                            <td>{{result['Unavo']['unassigned']}}</td>
+                            <td>{{result['Unavo']['assigned'] + result['Unavo']['unassigned']}}</td>
+                            <td><a href="{{url_for('plan_management.view_and_assign_plans', source_database='Unavo')}}" class="btn btn-primary">Manage</a></td>
+                        </tr>
+                        <tr>
+                            <th>Telgoo</th>
+                            <td>{{result['Telgoo']['assigned']}}</td>
+                            <td>{{result['Telgoo']['unassigned']}}</td>
+                            <td>{{result['Telgoo']['assigned'] + result['Telgoo']['unassigned']}}</td>
+                            <td><a href="{{url_for('plan_management.view_and_assign_plans', source_database='Telgoo')}}" class="btn btn-primary">Manage</a></td>
+                        </tr>
+                        <tr>
+                            <th>Terracom</th>
+                            <td>{{result['Terracom']['assigned']}}</td>
+                            <td>{{result['Terracom']['unassigned']}}</td>
+                            <td>{{result['Terracom']['assigned'] + result['Terracom']['unassigned']}}</td>
+                            <td><a href="{{url_for('plan_management.view_and_assign_plans', source_database='Terracom')}}" class="btn btn-primary">Manage</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="{{url_for('plan_management.download_summary_of_plans')}}" class="btn btn-primary" download>Download Summary</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-4">
+                <h3>Current Program Names</h3>
+                <ol type="a">
+                    {% for program in programs %}
+                        <li>{{program}}</li>
+                    {% endfor %}
+                </ol>
+                <div style="text-align: right;">
+                    <a class="btn btn-primary" href="{{url_for('plan_management.select_program_name')}}">Manage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

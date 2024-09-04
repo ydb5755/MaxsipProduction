@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Total Customer Count by Agent{% endblock title %}
+{% block stylesheet %}
+<script src="https://kit.fontawesome.com/49e5095171.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{{ url_for('.static', filename='agent_reports.css') }}">
+{% endblock stylesheet %}
+{% block content %}
+<main>
+    <div id="page-header">
+        <div class="container-md mt-2"  id="image-header-and-arrows">
+            <a href="{{url_for('agent_reports.agent_customer_analysis')}}">Previous Report</a>
+            <img src="{{url_for('main.static', filename='navyjpg.jpg')}}" alt="Navy Image" style="height: 150px;">
+            <a href="{{url_for('agent_reports.thirty_day_agent_and_master_agent')}}">Next Report</a>
+        </div>
+        <div class="container-md mt-2" id="status-report-header">
+            <h4 id="top-left-title">Agent Information</h4>
+            <div>
+                <h4>Total Customer Count by Agent or Master Agent</h4>
+                <h5 id="arrows-and-date">
+                    <i class="fa-solid fa-arrow-left" style="color: blue;" id="date-arrow-left"></i>
+                    <span id="current-date-target"></span>
+                    <i class="" style="color: blue;" id="date-arrow-right"></i>
+                </h5>
+            </div>
+            <div>
+                <div>
+                    <input type="radio" id="agent-radio" name="master_or_agent" value="agent" checked>
+                    <label for="agent">Agent</label>
+                </div>
+                <div>
+                    <input type="radio" id="master-agent-radio" name="master_or_agent" value="master_agent">
+                    <label for="master_agent">Master Agent</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+  <div class="container-lg mt-2 mb-10">
+    <div class="row">
+      <div class="col">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Agent or Master Agent Name</th>
+                    <th class="text-center">Total Customer Count</th>
+                    <th class="text-center">% Diff - 1 Day</th>
+                    <th class="text-center">% Diff - 7 Day</th>
+                    <th class="text-center">% Diff - 30 Day</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+            </tbody>
+        </table>
+        <table class="table table-bordered" style="width: 40%;">
+            <tbody>
+                <tr>
+                    <th><h1>Total Agents</h1></th>
+                    <td><h3 id="total-agent-target"></h3></td>
+                </tr>
+                <tr>
+                    <th><h1>Total Customers</h1></th>
+                    <td><h3 id="total-target"></h3></td>
+                </tr>
+            </tbody>
+        </table>
+        <button id="show-more" class="btn btn-primary btn-lg btn-block mb-3">Show More</button>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="{{url_for('.static', filename='total_customer_count_by_agent_or_master_agent.js')}}"></script>
+{% endblock content %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}Customer Age By Portal{% endblock title %}
+{% block stylesheet %}
+<script src="https://kit.fontawesome.com/49e5095171.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{{ url_for('.static', filename='status_reports.css') }}">
+{% endblock stylesheet %}
+{% block content %}
+<main>
+    <div class="container-md mt-2" id="status-report-header">
+        <div class="container-md mt-2" id="image-header-and-arrows">
+            <a href="{{url_for('status_reports.active_by_plan')}}">Previous Report</a>
+            <img src="{{url_for('main.static', filename='navyjpg.jpg')}}" alt="Navy Image" style="height: 150px;">
+            <a href="{{url_for('agent_reports.agent_customer_analysis')}}">Next Report</a>
+        </div>
+        <h4>Active Customer Age Analysis by Portal</h4>
+        <h5 id="current-date-target"></h5>
+    </div>
+    <div class="container-lg mt-2 mb-10">
+        <div class="row">
+            <div class="col">
+                <h2 id="active-customer-header">Active Customer Age Analysis by Portal</h2>
+                <table class="table table-bordered mb-5" id="active-customer-age-table">
+                  <tbody>
+                    <tr>
+                      <th></th>
+                      <th class="header-column text-center">Total Active Customers</th>
+                      <th class="header-column text-center">0-30 Days</th>
+                      <th class="header-column text-center">31-90 Days</th>
+                      <th class="header-column text-center">91-180 Days</th>
+                      <th class="header-column text-center">181-360 Days</th>
+                      <th class="header-column text-center">360+ Days</th>
+                    </tr>
+                    <tr>
+                      <th>Telgoo</th>
+                      <td class="loading text-center" id="telgooActive1"></td>
+                      <td class="text-center" id="telgooActive2"></td>
+                      <td class="text-center" id="telgooActive3"></td>
+                      <td class="text-center" id="telgooActive4"></td>
+                      <td class="text-center" id="telgooActive5"></td>
+                      <td class="text-center" id="telgooActive6"></td>
+                    </tr>
+                    <tr>
+                      <th>Terracom</th>
+                      <td class="loading text-center" id="terracomActive1"></td>
+                      <td class="text-center" id="terracomActive2"></td>
+                      <td class="text-center" id="terracomActive3"></td>
+                      <td class="text-center" id="terracomActive4"></td>
+                      <td class="text-center" id="terracomActive5"></td>
+                      <td class="text-center" id="terracomActive6"></td>
+                    </tr>
+                    <tr>
+                      <th>Unavo</th>
+                      <td class="loading text-center" id="unavoActive1"></td>
+                      <td class="text-center" id="unavoActive2"></td>
+                      <td class="text-center" id="unavoActive3"></td>
+                      <td class="text-center" id="unavoActive4"></td>
+                      <td class="text-center" id="unavoActive5"></td>
+                      <td class="text-center" id="unavoActive6"></td>
+                    </tr>
+                    <tr>
+                      <th>Total</th>
+                      <td class="text-center"><div class="loading" id="totalActiveCustomerCount"></div></td>
+                      <td class="text-center"><div id="totalActiveCustomerCount1"></div></td>
+                      <td class="text-center"><div id="totalActiveCustomerCount2"></div></td>
+                      <td class="text-center"><div id="totalActiveCustomerCount3"></div></td>
+                      <td class="text-center"><div id="totalActiveCustomerCount4"></div></td>
+                      <td class="text-center"><div id="totalActiveCustomerCount5"></div></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="{{url_for('.static', filename='customer_age_by_portal.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,66 @@
+.container-for-nums-and-arrow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.child{
+    box-sizing: border-box;
+    font-size: 1.5em;
+}
+
+#status-report-header, #active-customer-by-plan-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.diff-header>td{
+    text-align: center;
+    font-weight: bold;
+}
+
+.fa-2xl{
+    font-size: 3em;
+}
+
+#active-customer-header{
+    text-align: center;
+}
+
+#active-total-and-thirty-day-table td, #active-total-and-thirty-day-table th{
+    background-color: bisque;
+}
+#active-customer-by-plan-table td, #active-customer-by-plan-table th{
+    background-color: aquamarine;
+}
+#active-customer-age-table td, #active-customer-age-table th{
+    font-size: 1.5em;
+    background-color:burlywood;
+}
+#image-header-and-arrows{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: xx-large;
+}
+#title-and-date{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#second-header-row{
+    display: flex;
+    justify-content: space-between;
+}
+#auto-run-shell{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#delay-container{
+    display: flex;
+}

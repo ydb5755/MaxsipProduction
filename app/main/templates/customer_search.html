@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Customer Search{% endblock title %}
+{% block content %}
+<main class="container-lg mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="p-4 bg-white rounded border border-dark shadow-sm mb-4">
+                <h3 class="mb-4">Search by Customer Order ID or NLAD Subscriber ID</h3>
+                <form method="post" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ form.enroll_or_sub.label(class="form-label") }}
+                        {{ form.enroll_or_sub(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.id.label(class="form-label") }}
+                        {{ form.id(class="form-control") }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% if contacts %}
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-full-width">
+                        <thead>
+                            <tr>
+                                {% for header in headers %}
+                                    <th>{{ header }}</th>
+                                {% endfor %}
+                                <th>Contact Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contact in contacts %}
+                                <tr>
+                                    {% for value in contact %}
+                                        <td>{{ value }}</td>
+                                    {% endfor %}
+                                    <td><a href="{{url_for('main.customer_result_by_order_id', order_id=contact[1])}}">View Contact</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</main>
+{% endblock %}
